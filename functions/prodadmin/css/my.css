@@ -1,6 +1,23 @@
+h1 {
+  font-family: 'Abril Fatface';
+}
+
 .form-signin {
   width: 100%;
   max-width: 400px;
   padding: 15px;
   margin: auto;
+}
+
+.btn-group-toggle {
+  padding-top: 36px;
+  padding-bottom: 6px;
+}
+
+.form-group {
+  padding-bottom: 10px;
+}
+
+.homeAndAdd {
+  padding-top: 7px;
 }
