@@ -17,7 +17,7 @@ async function show_page_secured() {
         <div class="form-group">
             <input type="text" class="form-control" placeholder="Search by Product Name" id="inputSearch">
         </div>
-        <button type="submit" class="btn btn-secondary active" onclick="search()">Submit</button>
+        <button type="button" class="btn btn-secondary active" onclick="search()">Submit</button>
     </form>
     `;
 
@@ -268,23 +268,15 @@ async function search(index) {
         <div class="form-group">
             <input type="text" class="form-control" placeholder="Search by Product Name" id="inputSearch">
         </div>
-        <button type="submit" class="btn btn-secondary active" onclick="search()">Submit</button>
+        <button type="button" class="btn btn-secondary active" onclick="search()">Submit</button>
     </form>
     `;
 
-    // console.log("products: " + JSON.stringify(products))
-
     try {
-        // array will store all product info
+        const input = document.getElementById('inputSearch').value
+        console.log("input: " + JSON.stringify(input))
         products = []
-        // snapshot (of this collection in the database)
-        const snapshot = await firebase.firestore().collection(COLLECTION)
-                        // add where clause for query:
-                        // (look at index types documentation - boookmarked in WSP)
-                        // (see: composite index, further down that page)
-                        .where("name", "==", inputSearch)
-                        //.orderBy("name")
-                        .get()
+        const snapshot = await firebase.firestore().collection(COLLECTION).where("name", "==", input).get()
 
         // read all the products from the collection
         snapshot.forEach( doc => {
@@ -336,7 +328,7 @@ async function sortAZ(index) {
         <div class="form-group">
             <input type="text" class="form-control" placeholder="Search by Product Name" id="inputSearch">
         </div>
-        <button type="submit" class="btn btn-secondary active" onclick="search()">Submit</button>
+        <button type="button" class="btn btn-secondary active" onclick="search()">Submit</button>
     </form>
     `;
 
