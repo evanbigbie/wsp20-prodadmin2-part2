@@ -12,18 +12,12 @@ async function show_page_secured() {
         <a href='/home' class="btn btn-outline-primary">Home</a>
         <a href='/add' class="btn btn-outline-primary">Add a Product</a>
     </div>
-    <div class="btn-group-toggle" data-toggle="buttons">
-        <label class="btn btn-secondary active" onclick="sortAZ()">
-            <input type="checkbox" checked> Sort A-Z
-        </label>
-    </div>
+    <button type="submit" class="btn btn-secondary active" onclick="sortAZ()">Sort A-Z</button>
     <form>
-        <div class="form-group row">
-            <label for="inputPassword" class="col-sm-5 col-form-label">Search Product Name:</label>
-        <div class="col-sm-5">
-            <input type="text" class="form-control" id="inputSearch">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search by Product Name" id="inputSearch">
         </div>
-        </div>
+        <button type="submit" class="btn btn-secondary active" onclick="search()">Submit</button>
     </form>
     `;
 
@@ -269,18 +263,12 @@ async function search(index) {
         <a href='/home' class="btn btn-outline-primary">Home</a>
         <a href='/add' class="btn btn-outline-primary">Add a Product</a>
     </div>
-    <div class="btn-group-toggle" data-toggle="buttons">
-        <label class="btn btn-secondary active" onclick="sortAZ()">
-            <input type="checkbox" checked> Sort A-Z
-        </label>
-    </div>
+    <button type="submit" class="btn btn-secondary active" onclick="sortAZ()">Sort A-Z</button>
     <form>
-        <div class="form-group row">
-            <label for="inputPassword" class="col-sm-5 col-form-label">Search Product Name:</label>
-        <div class="col-sm-5">
-            <input type="text" class="form-control" id="inputSearch">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search by Product Name" id="inputSearch">
         </div>
-        </div>
+        <button type="submit" class="btn btn-secondary active" onclick="search()">Submit</button>
     </form>
     `;
 
@@ -294,8 +282,8 @@ async function search(index) {
                         // add where clause for query:
                         // (look at index types documentation - boookmarked in WSP)
                         // (see: composite index, further down that page)
-                        //.where("name", "==", "YYYYYY")
-                        .orderBy("name")
+                        .where("name", "==", inputSearch)
+                        //.orderBy("name")
                         .get()
 
         // read all the products from the collection
@@ -343,18 +331,12 @@ async function sortAZ(index) {
         <a href='/home' class="btn btn-outline-primary">Home</a>
         <a href='/add' class="btn btn-outline-primary">Add a Product</a>
     </div>
-    <div class="btn-group-toggle" data-toggle="buttons">
-        <label class="btn btn-secondary active" onclick="sortAZ()">
-            <input type="checkbox" checked> Sort A-Z
-        </label>
-    </div>
+    <button type="submit" class="btn btn-secondary active" onclick="sortAZ()">Sort A-Z</button>
     <form>
-        <div class="form-group row">
-            <label for="inputPassword" class="col-sm-5 col-form-label">Search Product Name:</label>
-        <div class="col-sm-5">
-            <input type="text" class="form-control" id="inputSearch">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search by Product Name" id="inputSearch">
         </div>
-        </div>
+        <button type="submit" class="btn btn-secondary active" onclick="search()">Submit</button>
     </form>
     `;
 
