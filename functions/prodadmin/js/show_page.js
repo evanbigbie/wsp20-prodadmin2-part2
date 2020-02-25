@@ -11,6 +11,15 @@ async function show_page_secured() {
         <a href='/home' class="btn btn-outline-primary">Home</a>
         <a href='/add' class="btn btn-outline-primary">Add a Product</a>
         <br>
+        <br>
+        <div class="btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-secondary active" onclick="sortAZ()">
+                <input type="checkbox" checked> Sort A-Z
+            </label>
+        </div>
+        <br>
+
+        <br>
     `;
 
     // nonblocking synchronous function call, so set up try/catch block
@@ -241,5 +250,71 @@ async function deleteProduct(index) {
         delete products[index]
     } catch (e) {
         glPageContent.innerHTML = 'Delete Error: <br>' + JSON.stringify(e)
+    }
+}
+
+// sort A-Z
+
+async function sortAZ(index) {
+    glPageContent.innerHTML = '<h1>Show Products</h1>'
+    glPageContent.innerHTML += `
+        <a href='/home' class="btn btn-outline-primary">Home</a>
+        <a href='/add' class="btn btn-outline-primary">Add a Product</a>
+        <br>
+        <br>
+        <div class="btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-secondary active" onclick="sortAZ()">
+                <input type="checkbox" checked> Sort A-Z
+            </label>
+        </div>
+        <br>
+    `;
+
+    console.log("products: " + JSON.stringify(products))
+
+    try {
+        // array will store all product info
+        products = []
+        // snapshot (of this collection in the database)
+        const snapshot = await firebase.firestore().collection(COLLECTION)
+                        // add where clause for query:
+                        // (look at index types documentation - boookmarked in WSP)
+                        // (see: composite index, further down that page)
+                        //.where("name", "==", "YYYYYY")
+                        .orderBy("name")
+                        .get()
+
+        // read all the products from the collection
+        snapshot.forEach( doc => {
+            const {name, summary, price, image, image_url} = doc.data()
+            const p = {docId: doc.id, name, summary, price, image, image_url}
+            products.push(p)
+        })
+    } catch (e) {
+        glaPageContent.innerHTML = 'Firestore access error. Try again later!<br>' + e
+        return
+    }
+
+    if (products.length === 0) {
+        glPageContent.innerHTML += '<h1>No products in the database</h1>'
+        return
+    }
+
+    for (let index = 0; index < products.length; index++) {
+        const p = products[index]
+        if (!p) continue
+        glPageContent.innerHTML += `
+        <div id="${p.docId}" class="card" style="width: 18rem; display: inline-block">
+            <img src="${p.image_url}" class="card-img-top">
+            <div class="card-body">
+            <h5 class="card-title">${p.name}</h5>
+            <p class="card-text">${p.price}<br/>${p.summary}</p>
+            <button class="btn btn-primary" type="button"
+                onclick="editProduct(${index})">Edit</button>
+            <button class="btn btn-danger" type="button"
+                onclick="deleteProduct(${index})">Delete</button>
+            </div>
+        </div>
+        `;
     }
 }
